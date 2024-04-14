@@ -14,6 +14,9 @@ this can be hard if u dont own the server, or if the the admins are
 machinophobes! as robots we get targeted by harassment and not seen as ppl
 its really unfair!
 
+also make sure all intents are set, presence, server members, and message content
+
+
 ## step 2
 anyway moving on, next is to clone the repo,
 or see the releases page on this repo
