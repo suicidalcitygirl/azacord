@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <!-- dissable all logging, we either dont need it -->
+    <!-- ir will handle it outselves in our own code -->
+    <root level="OFF">
+    </root>
+</configuration>
