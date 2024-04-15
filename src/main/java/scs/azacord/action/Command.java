@@ -7,6 +7,7 @@ import discord4j.common.util.Snowflake;
 
 import scs.azacord.uinterface.Display;
 import scs.azacord.service.Cache;
+import scs.azacord.service.Systemcall;
 
 public class Command {
 
@@ -25,6 +26,8 @@ public class Command {
             case "/exit": case "/quit": Action.quit(); break;
 
             case "/clear": Display.clear(); break;
+
+            case "/time": case "/date": printDate(); break;
 
             default: Display.append("System", "Unknown Command!"); break;
         }
@@ -63,5 +66,10 @@ public class Command {
                 messages.get(i).getAuthor().get().getUsername(),
                 messages.get(i).getContent()
             );
+    }
+
+    private static void printDate () {
+
+        Display.append(Systemcall.getDateTime());
     }
 }

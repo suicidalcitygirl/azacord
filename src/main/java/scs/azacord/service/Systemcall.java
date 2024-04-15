@@ -6,6 +6,20 @@ import java.nio.charset.StandardCharsets;
 
 public class Systemcall {
 
+    public static String getDateTime () {
+
+        try {
+            var process = Runtime.getRuntime().exec(
+                new String[]{"/bin/sh", "-c", "date"}
+            );
+            process.waitFor();
+            byte[] buffer = process.getInputStream().readAllBytes();
+            String string = new String(buffer, StandardCharsets.UTF_8);
+            return string.substring(0, string.length() - 1);
+
+        } catch (Exception e) { e.printStackTrace(); return ""; }
+    }
+
     public static int getConsoleWidth () {
 
         try {
