@@ -80,7 +80,7 @@ public class Input {
         if (getValue().length() == 0) { System.out.print("  \b\b\b\b"); return; }
 
         if (getValue().charAt(0) == '/') scs.azacord.action.Command.exec(getValue());
-        else Cache.queueOutgoingMessage(Cache.getCurrentChannelId(), getValue());
+        else Cache.queueOutgoingMessage(Cache.getCurrentChannelId(), getValue().replace("\\n","\n"));
 
         setValue("");
     }
