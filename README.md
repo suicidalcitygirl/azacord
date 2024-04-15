@@ -21,8 +21,9 @@ also make sure all intents are set, presence, server members, and message conten
 anyway moving on, next is to clone the repo,
 or see the releases page on this repo
 
-then compile if you cloned, then get the jar file
-and run it, the first time u run it, it will generate the config and exit
+tehn compile it, do this with `./build.sh`, then run `./install.sh`
+and run it using the newly install command `azacord`,
+the first time u run it, it will generate the config and exit
 put ur bot token in the config, tehn launch the program again
 
 ## step 3
