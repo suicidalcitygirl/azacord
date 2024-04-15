@@ -13,14 +13,20 @@ public class Display {
 
     private static Vector<String> screenBuffer = new Vector<String>();
 
+    private static void trimCheck () { synchronized (mutex) {
+
+        if (screenBuffer.size() > 50) for (int i = 0; i < 10; ++i)
+                screenBuffer.remove(0);
+    } }
+
     public static void append (String sender, String message) { synchronized (mutex) {
 
-        screenBuffer.add("[" + sender + "]: " + message);
+        screenBuffer.add("[" + sender + "]: " + message); trimCheck();
     } }
 
     public static void append (String message) { synchronized (mutex) {
 
-        screenBuffer.add(message);
+        screenBuffer.add(message); trimCheck();
     } }
 
     public static void clear () { synchronized (mutex) {
@@ -47,7 +53,7 @@ public class Display {
         }
 
         if (inputCache != Input.getValue()) {
-            inputCache = Input.getValue(); render();
+            inputCache = Input.getValue(); inputOnlyRender();
         }
     }
 
@@ -64,15 +70,13 @@ public class Display {
         }
     }
 
-    private static boolean cursorToggle = false;
-
     private static void render () { synchronized (mutex) {
 
         int width = Systemcall.getConsoleWidth();
         int height = Systemcall.getConsoleHeight();
 
         Systemcall.canonicalEnable();
-        System.out.print("\033[H\033[2J");
+        System.out.print("\033[2J\033[1;1H");
         System.out.flush();
 
         for (String line : screenBuffer)
@@ -88,7 +92,32 @@ public class Display {
         for (int i = 0; i < width - channel.length() - 4; ++i)
             System.out.print("─");
 
-        System.out.print(">: " + inputCache + (cursorToggle?"_":""));
+        inputFieldCache = ">: " + (
+            inputCache.length() > width - 16
+            ? inputCache.substring(inputCache.length() - (width - 16))
+            : inputCache
+        );
+        System.out.print(inputFieldCache);
+
+        Systemcall.canonicalDisable();
+    } }
+
+    private static String inputFieldCache = "";
+
+    private static void inputOnlyRender () { synchronized (mutex) {
+
+        int width = Systemcall.getConsoleWidth();
+        Systemcall.canonicalEnable();
+
+        for (int i = 0; i < inputFieldCache.length() + 2; ++i)
+            System.out.print("    \b\b\b\b\b");
+
+        inputFieldCache = ">: " + (
+            inputCache.length() > width - 16
+            ? inputCache.substring(inputCache.length() - (width - 16))
+            : inputCache
+        );
+        System.out.print(inputFieldCache);
 
         Systemcall.canonicalDisable();
     } }

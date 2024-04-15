@@ -58,6 +58,7 @@ public class Input {
                         String v = getValue();
                         if (v.length() > 0)
                             setValue(v.substring(0, v.length() - 1));
+                        else System.out.print("  \b\b\b\b");
                     break; }
 
                     case 13: onReturn(); break;
@@ -76,7 +77,7 @@ public class Input {
 
     private static void onReturn () {
 
-        if (getValue().length() == 0) return;
+        if (getValue().length() == 0) { System.out.print("  \b\b\b\b"); return; }
 
         if (getValue().charAt(0) == '/') scs.azacord.action.Command.exec(getValue());
         else Cache.queueOutgoingMessage(Cache.getCurrentChannelId(), getValue());
