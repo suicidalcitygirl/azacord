@@ -85,22 +85,25 @@ public class Command {
 
         if (args.length < 2) return;
 
-        Cache.Discord.getChannelById(Cache.getCurrentChannelId())
-            .createMessage(messageSpec -> {
+        try {
+            Cache.Discord.getChannelById(Cache.getCurrentChannelId())
+                .createMessage(messageSpec -> {
 
-            for (int i = 1; i < args.length; ++i) {
-                try {
-                    File attachementFile = new File(args[i]);
-                    if (!(attachementFile.exists() && !attachementFile.isDirectory()))
-                        continue;
+                for (int i = 1; i < args.length; ++i) {
+                    try {
+                        File attachementFile = new File(args[i]);
+                        if (!(attachementFile.exists() && !attachementFile.isDirectory()))
+                            continue;
 
-                    messageSpec.addFile(
-                        attachementFile.getName(),
-                        new FileInputStream(attachementFile)
-                    );
-                } catch (Exception e) {}
-            }
+                        messageSpec.addFile(
+                            attachementFile.getName(),
+                            new FileInputStream(attachementFile)
+                        );
+                    } catch (Exception e) {}
+                }
 
-        }).block();
+            }).block();
+            
+        } catch (Exception e) {}
     }
 }
