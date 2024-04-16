@@ -21,7 +21,7 @@ public class Command {
 
             case "/ls": listChannels(); break;
 
-            case "/join": setChannel(args); break;
+            case "/join": case "/j": setChannel(args); break;
 
             case "/exit": case "/quit": Action.quit(); break;
 
