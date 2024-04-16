@@ -2,6 +2,9 @@
 package scs.azacord.uinterface;
 
 import java.util.Vector;
+import java.util.HashMap;
+import java.time.Instant;
+import java.time.Duration;
 
 import scs.azacord.service.Systemcall;
 import scs.azacord.service.Cache;
@@ -33,14 +36,28 @@ public class Display {
     } }
 
     private static Vector<String> typingUsers = new Vector<String>();
+    private static HashMap<String, Instant> typingTimes = new HashMap<String, Instant>();
     public static void addTyper (String typer) { synchronized (mutex) {
-        if (!typingUsers.contains(typer)) typingUsers.add(typer);
+        if (typingUsers.contains(typer)) return;
+        typingUsers.add(typer);
+        typingTimes.put(typer, Instant.now());
     } }
     public static void removeTyper (String typer) { synchronized (mutex) {
-        if (typingUsers.contains(typer)) typingUsers.remove(typer);
+        if (!typingUsers.contains(typer)) return;
+        typingUsers.remove(typer);
+        typingTimes.remove(typer);
     } }
     public static void clearTypists () { synchronized (mutex) {
         typingUsers.clear();
+    } }
+    public static void checkTypists () { synchronized (mutex) {
+        Vector<String> removeCache = new Vector<String>();
+        for (String typer : typingUsers) {
+            Duration duration = Duration.between(typingTimes.get(typer), Instant.now());
+            if (duration.toSeconds() >= 14)
+                removeCache.add(typer);
+        }
+        for (String typer : removeCache) removeTyper(typer);
     } }
     private static String generateTypingStatus (int lengthLimit) { synchronized (mutex) {
         String returnValue = "";
@@ -69,12 +86,8 @@ public class Display {
 
         timer++; if (timer > 100) {
             runOccasionalChecks(); timer = 0; }
-
-        timer2++; if (timer2 > 1500) {
-            clearTypists(); timer2 = 0; }
-
     }
-    private static int timer, timer2;
+    private static int timer;
 
     private static String inputCache;
     private static int screenBufferCache, typingUserCache, widthCache, heightCache;
@@ -105,6 +118,8 @@ public class Display {
         if (heightCache != heightResult) {
             heightCache = heightResult; render();
         }
+
+        checkTypists();
     }
 
     private static void render () { synchronized (mutex) {
