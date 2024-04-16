@@ -19,10 +19,14 @@ public class Events {
         MessageChannel channel = message.getChannel().block();
         if (message.getAuthor().isEmpty()) return;
         if (channel.getId().asString().equals(Cache.getCurrentChannelId())) {
+
             Display.append(
                 message.getAuthor().get().getUsername(),
-                message.getContent().isEmpty() ? "<empty>" : message.getContent()
+                message.getContent()
             );
+            for (var attachement : message.getAttachments()) {
+                Display.append(" ─ " + attachement.getUrl());
+            }
         }
     }
 

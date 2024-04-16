@@ -61,11 +61,15 @@ public class Command {
         Snowflake now = Snowflake.of(Instant.now());
         var messages = Cache.Discord.getChannelById(Cache.getCurrentChannelId())
             .getMessagesBefore(now).take(100).collectList().block();
-        for (int i = messages.size() - 1; i >= 0; --i)
+        for (int i = messages.size() - 1; i >= 0; --i) {
             Display.append(
                 messages.get(i).getAuthor().get().getUsername(),
                 messages.get(i).getContent()
             );
+            for (var attachement : messages.get(i).getAttachments()) {
+                Display.append(" ─ " + attachement.getUrl());
+            }
+        }
     }
 
     private static void printDate () {
