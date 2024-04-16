@@ -2,6 +2,8 @@
 package scs.azacord.action;
 
 import java.time.Instant;
+import java.io.File;
+import java.io.FileInputStream;
 
 import discord4j.common.util.Snowflake;
 
@@ -28,6 +30,8 @@ public class Command {
             case "/clear": Display.clear(); break;
 
             case "/time": case "/date": printDate(); break;
+
+            case "/upload": case "/attach": case "/a": attach(args); break;
 
             default: Display.append("System", "Unknown Command!"); break;
         }
@@ -75,5 +79,28 @@ public class Command {
     private static void printDate () {
 
         Display.append(Systemcall.getDateTime());
+    }
+
+    private static void attach (String[] args) {
+
+        if (args.length < 2) return;
+
+        Cache.Discord.getChannelById(Cache.getCurrentChannelId())
+            .createMessage(messageSpec -> {
+
+            for (int i = 1; i < args.length; ++i) {
+                try {
+                    File attachementFile = new File(args[i]);
+                    if (!(attachementFile.exists() && !attachementFile.isDirectory()))
+                        continue;
+
+                    messageSpec.addFile(
+                        attachementFile.getName(),
+                        new FileInputStream(attachementFile)
+                    );
+                } catch (Exception e) {}
+            }
+
+        }).block();
     }
 }
