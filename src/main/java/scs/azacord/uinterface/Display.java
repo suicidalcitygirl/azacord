@@ -15,7 +15,7 @@ public class Display {
 
     private static void trimCheck () { synchronized (mutex) {
 
-        if (screenBuffer.size() > 50) for (int i = 0; i < 10; ++i)
+        if (screenBuffer.size() > 140) for (int i = 0; i < 10; ++i)
                 screenBuffer.remove(0);
     } }
 
