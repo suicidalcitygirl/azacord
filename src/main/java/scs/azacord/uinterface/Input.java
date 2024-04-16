@@ -61,11 +61,11 @@ public class Input {
                         else System.out.print("  \b\b\b\b");
                     break; }
 
-                    case 13: onReturn(); break;
+                    case 13: typeStop(); onReturn(); break;
 
                     case 27: Action.quit(); break;
 
-                    default: setValue(getValue() + (char)input); break;
+                    default: setValue(getValue() + (char)input); typeStart(); break;
                 }
             }
 
@@ -84,4 +84,17 @@ public class Input {
 
         setValue("");
     }
+
+    private static boolean typingActive = false;
+    private static void typeStart () { try {
+
+        if (typingActive) return;
+        if (Cache.getCurrentChannelId().equals("")) return;
+        if (getValue().charAt(0) == '/') return;
+
+        Cache.Discord.getChannelById(Cache.getCurrentChannelId()).type().block();
+        typingActive = true;
+
+    } catch (Exception e) {} }
+    private static void typeStop () { typingActive = false; }
 }

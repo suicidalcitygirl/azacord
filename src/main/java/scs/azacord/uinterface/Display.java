@@ -23,33 +23,70 @@ public class Display {
 
         screenBuffer.add("[" + sender + "]: " + message); trimCheck();
     } }
-
     public static void append (String message) { synchronized (mutex) {
 
         screenBuffer.add(message); trimCheck();
     } }
-
     public static void clear () { synchronized (mutex) {
 
         screenBuffer.clear();
     } }
 
+    private static Vector<String> typingUsers = new Vector<String>();
+    public static void addTyper (String typer) { synchronized (mutex) {
+        if (!typingUsers.contains(typer)) typingUsers.add(typer);
+    } }
+    public static void removeTyper (String typer) { synchronized (mutex) {
+        if (typingUsers.contains(typer)) typingUsers.remove(typer);
+    } }
+    public static void clearTypists () { synchronized (mutex) {
+        typingUsers.clear();
+    } }
+    private static String generateTypingStatus (int lengthLimit) { synchronized (mutex) {
+        String returnValue = "";
+        switch (typingUsers.size()) {
+            case 0: break;
+            case 1: returnValue = typingUsers.get(0) + " is typing..."; break;
+            case 2: returnValue = typingUsers.get(0) + " and " + typingUsers.get(1) + " are typing..."; break;
+            default: {
+                returnValue = typingUsers.get(0);
+                for (int i = 1; i < typingUsers.size() - 1; ++i)
+                    returnValue += ", " + typingUsers.get(i);
+                returnValue += " and " + typingUsers.get(typingUsers.size() - 1) + " are typing...";
+            break; }
+        }
+        if (returnValue.length() > lengthLimit) {
+            returnValue = "Multiple users typing...";
+            if (returnValue.length() > lengthLimit)
+            returnValue = "...";
+        }
+        return returnValue;
+    } }
+
     public static void tick () {
 
         runChecks();
+
         timer++; if (timer > 100) {
             runOccasionalChecks(); timer = 0; }
 
+        timer2++; if (timer2 > 1500) {
+            clearTypists(); timer2 = 0; }
+
     }
-    private static int timer;
+    private static int timer, timer2;
 
     private static String inputCache;
-    private static int screenBufferCache, widthCache, heightCache;
+    private static int screenBufferCache, typingUserCache, widthCache, heightCache;
 
     private static void runChecks () {
 
         if (screenBufferCache != screenBuffer.size()) {
             screenBufferCache = screenBuffer.size(); render();
+        }
+
+        if (typingUserCache != typingUsers.size()) {
+            typingUserCache = typingUsers.size(); render();
         }
 
         if (inputCache != Input.getValue()) {
@@ -89,7 +126,13 @@ public class Display {
         String channel = Cache.getCurrentChannelName();
         for (int i = 0; i < 4; ++i) System.out.print("─");
         System.out.print(channel);
-        for (int i = 0; i < width - channel.length() - 4; ++i)
+        for (int i = 0; i < 2; ++i) System.out.print("─");
+        String typeStatus = generateTypingStatus(width - channel.length() - 6);
+        // typeStatus = typeStatus.length() > 0 ? "┤" + typeStatus + "├" : typeStatus;
+        // typeStatus = typeStatus.length() > 0 ? "⋅" + typeStatus + "⋅" : typeStatus;
+        typeStatus = typeStatus.length() > 0 ? " " + typeStatus + " " : typeStatus;
+        System.out.print(typeStatus);
+        for (int i = 0; i < width - channel.length() - 6 - typeStatus.length(); ++i)
             System.out.print("─");
 
         inputFieldCache = ">: " + (

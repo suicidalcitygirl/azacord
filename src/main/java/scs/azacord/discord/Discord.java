@@ -7,6 +7,8 @@ import discord4j.core.DiscordClient;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.event.domain.guild.GuildCreateEvent;
+import discord4j.core.event.domain.channel.TypingStartEvent;
+import discord4j.core.event.domain.lifecycle.ReadyEvent;
 
 import scs.azacord.service.Config;
 import scs.azacord.service.Cache;
@@ -51,11 +53,17 @@ public class Discord {
         DiscordClient client = DiscordClient.create(token);
         GatewayDiscordClient gateway = client.login().block();
 
+        gateway.on(ReadyEvent.class).subscribe(event -> {
+            Events.onReadyEvent(event);
+        });
         gateway.on(MessageCreateEvent.class).subscribe(event -> {
             Events.onMessageCreateEvent(event);
         });
         gateway.on(GuildCreateEvent.class).subscribe(event -> {
             Events.onGuildCreateEvent(event);
+        });
+        gateway.on(TypingStartEvent.class).subscribe(event -> {
+            Events.onTypingStartEvent(event);
         });
 
         Display.append("System", "Connected succesfully!");

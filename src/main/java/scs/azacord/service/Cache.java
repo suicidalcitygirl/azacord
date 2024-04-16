@@ -4,6 +4,7 @@ package scs.azacord.service;
 import java.util.Vector;
 
 import discord4j.core.object.entity.channel.GuildMessageChannel;
+import discord4j.core.object.entity.User;
 
 import scs.azacord.module.MessageCache;
 
@@ -37,6 +38,15 @@ public class Cache {
     }
 
     public class Discord {
+
+        // SELF USER CACHE
+        private static User selfUser;
+        public static synchronized User getSelfUser () {
+            return selfUser;
+        }
+        public static synchronized void setSelfUser (User user) {
+            selfUser = user;
+        }
 
         // GUILD CHANNEL CACHE
         private static Vector<GuildMessageChannel> channelCache

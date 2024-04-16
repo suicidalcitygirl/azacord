@@ -61,6 +61,7 @@ public class Command {
         );
 
         Display.clear();
+        Display.clearTypists();
 
         Snowflake now = Snowflake.of(Instant.now());
         var messages = Cache.Discord.getChannelById(Cache.getCurrentChannelId())
@@ -103,7 +104,7 @@ public class Command {
                 }
 
             }).block();
-            
+
         } catch (Exception e) {}
     }
 }
