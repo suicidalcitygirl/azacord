@@ -3,6 +3,7 @@ package scs.azacord.service;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.nio.charset.StandardCharsets;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
@@ -48,6 +49,15 @@ public class Config {
                     }
                 }
 
+                if (token.equals(""))
+                    Files.writeString(configFile.toPath(), "\ntoken=", StandardOpenOption.APPEND);
+
+                if (pingSound.equals(""))
+                    Files.writeString(configFile.toPath(), "\n# default:/opt/azacord/ping1.wav\npingSound=NULL", StandardOpenOption.APPEND);
+
+                if (typeSound.equals(""))
+                    Files.writeString(configFile.toPath(), "\n# default: /opt/azacord/type1.mp3\ntypeSound=NULL", StandardOpenOption.APPEND);
+
                 return true;
 
             } else {
@@ -72,11 +82,15 @@ public class Config {
                 "# azacord config file, generated " +
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now())
 
-                + "\n\n# bot token to log in with"
+                + "\n"
+                + "\n# bot token to login with"
                 + "\ntoken="
                 + "\n# sound effects, NULL to disable value, mplayer required"
-                + "\npingSound=/opt/azacord/ping1.wav"
-                + "\ntypeSound=/opt/azacord/type1.mp3"
+                + "\n# default:/opt/azacord/ping1.wav"
+                + "\npingSound=NULL"
+                + "\n# default: /opt/azacord/type1.mp3"
+                + "\ntypeSound=NULL"
+                + "\n"
             );
 
         } catch (Exception e) {
