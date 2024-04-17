@@ -5,6 +5,7 @@ import scs.azacord.discord.Discord;
 import scs.azacord.uinterface.Display;
 import scs.azacord.uinterface.Input;
 import scs.azacord.service.Systemcall;
+import scs.azacord.service.Audio;
 
 public class Action {
 
@@ -16,6 +17,8 @@ public class Action {
         Display.tick();
 
         Discord.waitForStop();
+
+        Audio.playQuit();
 
         Systemcall.canonicalEnable();
         System.exit(0);

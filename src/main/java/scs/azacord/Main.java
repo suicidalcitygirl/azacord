@@ -4,6 +4,7 @@ package scs.azacord;
 import java.lang.Thread;
 
 import scs.azacord.service.Config;
+import scs.azacord.service.Audio;
 import scs.azacord.discord.Discord;
 import scs.azacord.uinterface.Input;
 import scs.azacord.uinterface.Display;
@@ -19,6 +20,8 @@ public class Main {
             return;
         }
 
+        Audio.playStart();
+
         Input.start();
         Discord.start();
 
@@ -28,7 +31,5 @@ public class Main {
 
             try { Thread.sleep(10); } catch (Exception e) {}
         }
-
-        System.out.println("\nEXIT!");
     }
 }

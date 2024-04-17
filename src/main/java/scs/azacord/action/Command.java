@@ -10,6 +10,7 @@ import discord4j.common.util.Snowflake;
 import scs.azacord.uinterface.Display;
 import scs.azacord.service.Cache;
 import scs.azacord.service.Systemcall;
+import scs.azacord.service.Audio;
 
 public class Command {
 
@@ -62,6 +63,7 @@ public class Command {
 
         Display.clear();
         Display.clearTypists();
+        Audio.playSwitchChannel();
 
         Snowflake now = Snowflake.of(Instant.now());
         var messages = Cache.Discord.getChannelById(Cache.getCurrentChannelId())

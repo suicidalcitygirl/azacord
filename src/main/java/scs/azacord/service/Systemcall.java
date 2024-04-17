@@ -6,6 +6,16 @@ import java.nio.charset.StandardCharsets;
 
 public class Systemcall {
 
+    public static void playSoundWait (String a) {
+
+        try {
+            Runtime.getRuntime().exec(
+                new String[]{"/bin/sh", "-c", "mplayer '" +a+ "'"}
+            ).waitFor();
+
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+
     public static void playSound (String a) {
 
         try {

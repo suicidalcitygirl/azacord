@@ -13,6 +13,10 @@ public class Config {
     private static String token = ""; public static String getToken () { return token; }
     private static String pingSound = ""; public static String getPingSound () { return pingSound; }
     private static String typeSound = ""; public static String getTypeSound () { return typeSound; }
+    private static String startSound = ""; public static String getStartSound () { return startSound; }
+    private static String switchChannelSound = ""; public static String getSwitchChannelSound () { return switchChannelSound; }
+    private static String typeAlertSound = ""; public static String getTypeAlertSound () { return typeAlertSound; }
+    private static String quitSound = ""; public static String getQuitSound () { return quitSound; }
 
 
     private static String configPath = System.getProperty("user.home") + "/.config/azacord.conf";
@@ -46,6 +50,10 @@ public class Config {
                         case "token": token = values[1]; break;
                         case "pingSound": pingSound = values[1]; break;
                         case "typeSound": typeSound = values[1]; break;
+                        case "startSound": startSound = values[1]; break;
+                        case "switchChannelSound": switchChannelSound = values[1]; break;
+                        case "typeAlertSound": typeAlertSound = values[1]; break;
+                        case "quitSound": quitSound = values[1]; break;
                     }
                 }
 
@@ -57,6 +65,18 @@ public class Config {
 
                 if (typeSound.equals(""))
                     Files.writeString(configFile.toPath(), "\n# default: /opt/azacord/type1.mp3\ntypeSound=NULL", StandardOpenOption.APPEND);
+
+                if (startSound.equals(""))
+                    Files.writeString(configFile.toPath(), "\n# default: NULL\nstartSound=NULL", StandardOpenOption.APPEND);
+
+                if (switchChannelSound.equals(""))
+                    Files.writeString(configFile.toPath(), "\n# default: NULL\nswitchChannelSound=NULL", StandardOpenOption.APPEND);
+
+                if (typeAlertSound.equals(""))
+                    Files.writeString(configFile.toPath(), "\n# default: NULL\ntypeAlertSound=NULL", StandardOpenOption.APPEND);
+
+                if (quitSound.equals(""))
+                    Files.writeString(configFile.toPath(), "\n# default: NULL\nquitSound=NULL", StandardOpenOption.APPEND);
 
                 return true;
 
@@ -90,6 +110,16 @@ public class Config {
                 + "\npingSound=NULL"
                 + "\n# default: /opt/azacord/type1.mp3"
                 + "\ntypeSound=NULL"
+                + "\n# default: NULL"
+                + "\nstartSound=NULL"
+                + "\n# default: NULL"
+                + "\nswitchChannelSound=NULL"
+                + "\n# default: NULL"
+                + "\ntypeAlertSound=NULL"
+                + "\n# default: NULL"
+                + "\nquitSound=NULL"
+                + "\n"
+                + "\n"
                 + "\n"
             );
 

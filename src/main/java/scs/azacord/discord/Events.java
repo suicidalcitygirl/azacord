@@ -65,7 +65,9 @@ public class Events {
             return;
 
         MessageChannel channel = event.getChannel().block();
-        if (channel.getId().asString().equals(Cache.getCurrentChannelId()))
+        if (channel.getId().asString().equals(Cache.getCurrentChannelId())) {
             Display.addTyper(username);
+            Audio.playTypeAlert();
+        }
     }
 }
