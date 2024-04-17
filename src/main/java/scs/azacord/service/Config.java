@@ -9,7 +9,9 @@ import java.time.LocalDateTime;
 
 public class Config {
 
-    private static String token; public static String getToken () { return token; }
+    private static String token = ""; public static String getToken () { return token; }
+    private static String pingSound = ""; public static String getPingSound () { return pingSound; }
+    private static String typeSound = ""; public static String getTypeSound () { return typeSound; }
 
 
     private static String configPath = System.getProperty("user.home") + "/.config/azacord.conf";
@@ -41,6 +43,8 @@ public class Config {
                     switch (values[0]) {
 
                         case "token": token = values[1]; break;
+                        case "pingSound": pingSound = values[1]; break;
+                        case "typeSound": typeSound = values[1]; break;
                     }
                 }
 
@@ -68,7 +72,11 @@ public class Config {
                 "# azacord config file, generated " +
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now())
 
+                + "\n\n# bot token to log in with"
                 + "\ntoken="
+                + "\n# sound effects, NULL to disable value, mplayer required"
+                + "\npingSound=/opt/azacord/ping1.wav"
+                + "\ntypeSound=/opt/azacord/type1.mp3"
             );
 
         } catch (Exception e) {

@@ -16,7 +16,7 @@ public class Action {
         Display.tick();
 
         Discord.waitForStop();
-        
+
         Systemcall.canonicalEnable();
         System.exit(0);
     }

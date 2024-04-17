@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import scs.azacord.discord.Discord;
 import scs.azacord.service.Cache;
 import scs.azacord.service.Systemcall;
+import scs.azacord.service.Audio;
 import scs.azacord.action.Action;
 
 public class Input {
@@ -51,6 +52,8 @@ public class Input {
                 if (bufferedReader.ready())
                     input = bufferedReader.read();
                 else { Thread.sleep(1); continue; }
+
+                Audio.playType();
 
                 switch (input) {
 

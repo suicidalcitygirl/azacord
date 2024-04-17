@@ -11,6 +11,7 @@ import discord4j.core.event.domain.channel.TypingStartEvent;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
 
 import scs.azacord.service.Cache;
+import scs.azacord.service.Audio;
 import scs.azacord.uinterface.Display;
 
 public class Events {
@@ -40,6 +41,8 @@ public class Events {
             }
 
             Display.removeTyper(message.getAuthor().get().getUsername());
+
+            Audio.playPing();
         }
     }
 
