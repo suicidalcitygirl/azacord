@@ -95,7 +95,8 @@ public class Input {
         if (Cache.getCurrentChannelId().equals("")) return;
         if (getValue().charAt(0) == '/') return;
 
-        Cache.Discord.getChannelById(Cache.getCurrentChannelId()).type().block();
+        try { Cache.Discord.getChannelById(Cache.getCurrentChannelId()).type().block();
+        } catch (Exception e) {}
         typingActive = true;
 
     } catch (Exception e) {} }
