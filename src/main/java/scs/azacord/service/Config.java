@@ -19,7 +19,7 @@ public class Config {
     private static String quitSound = ""; public static String getQuitSound () { return quitSound; }
     private static String useColors = ""; public static boolean getUseColors () { return useColors.equals("true"); }
     private static String disableAttachements = ""; public static boolean getDisableAttachements () { return disableAttachements.equals("true"); }
-
+    private static String inputFieldOverflowFix = ""; public static boolean getInputFieldOverflowFix () { return inputFieldOverflowFix.equals("true"); }
 
     private static String configPath = System.getProperty("user.home") + "/.config/azacord.conf";
     public static String getConfigPath () { return configPath; }
@@ -58,6 +58,7 @@ public class Config {
                         case "quitSound": quitSound = values[1]; break;
                         case "useColors": useColors = values[1]; break;
                         case "disableAttachements": disableAttachements = values[1]; break;
+                        case "inputFieldOverflowFix": inputFieldOverflowFix = values[1]; break;
                     }
                 }
 
@@ -89,6 +90,10 @@ public class Config {
                 if (disableAttachements.equals("")) {
                     Files.writeString(configFile.toPath(), "\n# default: false\ndisableAttachements=false", StandardOpenOption.APPEND);
                     disableAttachements = "false";
+                }
+                if (inputFieldOverflowFix.equals("")) {
+                    Files.writeString(configFile.toPath(), "\n# default: false\ninputFieldOverflowFix=false", StandardOpenOption.APPEND);
+                    inputFieldOverflowFix = "false";
                 }
 
                 return true;
@@ -135,6 +140,9 @@ public class Config {
                 + "\nuseColors=true"
                 + "\n# default: false"
                 + "\ndisableAttachements=false"
+                + "\n# default: false"
+                + "\n# only try this if ur having issues with typing"
+                + "\ninputFieldOverflowFix=false"
                 + "\n"
                 + "\n"
                 + "\n"

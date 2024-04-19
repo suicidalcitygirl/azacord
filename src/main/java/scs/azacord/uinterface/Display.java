@@ -189,7 +189,11 @@ public class Display {
         Systemcall.canonicalEnable();
 
         for (int i = 0; i < inputFieldCache.length() + 2; ++i)
-            System.out.print("    \b\b\b\b\b");
+            System.out.print(
+                Config.getInputFieldOverflowFix()
+                ? "    \b\b\b\b"
+                : "    \b\b\b\b\b"
+            );
 
         inputFieldCache = ">: " + (
             inputCache.length() > width - 16
