@@ -191,7 +191,7 @@ public class Display {
         for (int i = 0; i < inputFieldCache.length() + 2; ++i)
             System.out.print(
                 Config.getInputFieldOverflowFix()
-                ? "    \b\b\b\b"
+                ? "    \b\b\b\b\b "
                 : "    \b\b\b\b\b"
             );
 
