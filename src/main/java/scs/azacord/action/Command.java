@@ -38,6 +38,8 @@ public class Command {
 
             case "/colors": case "/color": colorTest(); break;
 
+            case "/togglesound": toggleSound(); break;
+
             default: Display.append(ConsoleColors.Red() + "Unknown Command!" + ConsoleColors.Reset()); break;
         }
     }
@@ -163,5 +165,17 @@ public class Command {
         Display.append(ConsoleColors.Purple() + "PURPLE" + ConsoleColors.Reset() + " " + ConsoleColors.Purple_BG() + "PURPLE" + ConsoleColors.Reset());
         Display.append(ConsoleColors.Cyan() + "CYAN" + ConsoleColors.Reset() + "     " + ConsoleColors.Cyan_BG() + "CYAN" + ConsoleColors.Reset());
         Display.append(ConsoleColors.White() + "WHITE" + ConsoleColors.Reset() + "   " + ConsoleColors.White_BG() + "WHITE" + ConsoleColors.Reset());
+    }
+
+    private static void toggleSound () {
+
+        Audio.toggleSound();
+        Display.append("Sounds: " +
+            (
+                Audio.disabled()
+                ? ConsoleColors.Red() + "disabled" + ConsoleColors.Reset()
+                : ConsoleColors.Green() + "enabled" + ConsoleColors.Reset()
+            )
+        );
     }
 }

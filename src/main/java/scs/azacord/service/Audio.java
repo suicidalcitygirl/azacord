@@ -28,8 +28,13 @@ public class Audio {
         playSoundWait(Config.getQuitSound());
     }
 
+    private static boolean disabled = false;
+    public static boolean disabled () { return disabled; }
+    public static void toggleSound () { disabled = !disabled; }
+
     private static void playSound (String filePath) {
 
+        if (disabled) return;
         if (filePath.equals("")) return;
         if (filePath.equals("NULL")) return;
 
@@ -37,6 +42,7 @@ public class Audio {
     }
     private static void playSoundWait (String filePath) {
 
+        if (disabled) return;
         if (filePath.equals("")) return;
         if (filePath.equals("NULL")) return;
 
