@@ -52,7 +52,7 @@ public class Command {
 
     private static void listChannels () {
 
-        Display.append("::CHANNEL LIST::");
+        Display.append(ConsoleColors.White() + "::CHANNEL LIST::" + ConsoleColors.Reset());
         var channels = Cache.Discord.getChannels();
         for (int i = 0; i < channels.length; ++i)
             Display.append(
@@ -72,17 +72,37 @@ public class Command {
                 + users[i].getUsername() + ", "
             ;
 
-        Display.append("::PRIVATE MESSAGE LIST::");
+        Display.append(ConsoleColors.White() + "::PRIVATE MESSAGE LIST::" + ConsoleColors.Reset());
         Display.append(message);
     }
 
     private static void search (String[] args) {
 
-        Display.append(
-            ConsoleColors.Yellow()
-            + "NOT IMPLEMENTED!!"
-            + ConsoleColors.Reset()
-        );
+        if (args.length < 2) return;
+        String query = args[1];
+
+        var channels = Cache.Discord.getChannels();
+        String[] channelList = new String[channels.length];
+        for (int i = 0; i < channels.length; ++i)
+            channelList[i] =
+                ConsoleColors.White() + i + ConsoleColors.Reset() + ": "
+                + channels[i].getGuild().block().getName()
+                + "::" + channels[i].getName()
+            ;
+
+        var users = Cache.Discord.getUsers();
+        String[] dmList = new String[users.length];
+        for (int i = 0; i < users.length; ++i)
+            dmList[i] =
+                ConsoleColors.White() + i + ConsoleColors.Reset() + ": "
+                + users[i].getUsername()
+            ;
+
+        Display.append(ConsoleColors.White() + "::CHANNEL SEARCH RESULTS::" + ConsoleColors.Reset());
+        for (String entry : channelList) if (entry.contains(query)) Display.append(entry);
+
+        Display.append(ConsoleColors.White() + "::USER DM SEARCH RESULTS::" + ConsoleColors.Reset());
+        for (String entry : dmList)  if (entry.contains(query)) Display.append(entry);
     }
 
     private static void setChannel (String[] args) {
