@@ -17,6 +17,7 @@ public class Config {
     private static String switchChannelSound = ""; public static String getSwitchChannelSound () { return switchChannelSound; }
     private static String typeAlertSound = ""; public static String getTypeAlertSound () { return typeAlertSound; }
     private static String quitSound = ""; public static String getQuitSound () { return quitSound; }
+    private static String useColors = ""; public static boolean getUseColors () { return useColors.equals("true"); }
 
 
     private static String configPath = System.getProperty("user.home") + "/.config/azacord.conf";
@@ -54,6 +55,7 @@ public class Config {
                         case "switchChannelSound": switchChannelSound = values[1]; break;
                         case "typeAlertSound": typeAlertSound = values[1]; break;
                         case "quitSound": quitSound = values[1]; break;
+                        case "useColors": useColors = values[1]; break;
                     }
                 }
 
@@ -77,6 +79,11 @@ public class Config {
 
                 if (quitSound.equals(""))
                     Files.writeString(configFile.toPath(), "\n# default: NULL\nquitSound=NULL", StandardOpenOption.APPEND);
+
+                if (useColors.equals("")) {
+                    Files.writeString(configFile.toPath(), "\n# default: true\nuseColors=true", StandardOpenOption.APPEND);
+                    useColors = "true";
+                }
 
                 return true;
 
@@ -118,6 +125,8 @@ public class Config {
                 + "\ntypeAlertSound=NULL"
                 + "\n# default: NULL"
                 + "\nquitSound=NULL"
+                + "\n# default: true"
+                + "\nuseColors=true"
                 + "\n"
                 + "\n"
                 + "\n"

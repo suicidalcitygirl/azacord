@@ -11,6 +11,8 @@ import scs.azacord.uinterface.Display;
 import scs.azacord.service.Cache;
 import scs.azacord.service.Systemcall;
 import scs.azacord.service.Audio;
+import scs.azacord.service.ConsoleColors;
+import scs.azacord.service.Config;
 
 public class Command {
 
@@ -33,6 +35,8 @@ public class Command {
             case "/time": case "/date": printDate(); break;
 
             case "/upload": case "/attach": case "/a": attach(args); break;
+
+            case "/colors": case "/color": colorTest(); break;
 
             default: Display.append("System", "Unknown Command!"); break;
         }
@@ -108,5 +112,25 @@ public class Command {
             }).block();
 
         } catch (Exception e) {}
+    }
+
+    private static void colorTest () {
+
+        if (!Config.getUseColors()) {
+
+            Display.append("Colors are disabled!");
+            Display.append("You can enable them in the Configuration file.");
+            Display.append("Located: '" + Config.getConfigPath() + "'.");
+            return;
+        }
+
+        Display.append(ConsoleColors.Black() + "BLACK" + ConsoleColors.Reset() + "   " + ConsoleColors.Black_BG() + "BLACK" + ConsoleColors.Reset());
+        Display.append(ConsoleColors.Red() + "RED" + ConsoleColors.Reset() + "       " + ConsoleColors.Red_BG() + "RED" + ConsoleColors.Reset());
+        Display.append(ConsoleColors.Green() + "GREEN" + ConsoleColors.Reset() + "   " + ConsoleColors.Green_BG() + "GREEN" + ConsoleColors.Reset());
+        Display.append(ConsoleColors.Yellow() + "YELLOW" + ConsoleColors.Reset() + " " + ConsoleColors.Yellow_BG() + "YELLOW" + ConsoleColors.Reset());
+        Display.append(ConsoleColors.Blue() + "BLUE" + ConsoleColors.Reset() + "     " + ConsoleColors.Blue_BG() + "BLUE" + ConsoleColors.Reset());
+        Display.append(ConsoleColors.Purple() + "PURPLE" + ConsoleColors.Reset() + " " + ConsoleColors.Purple_BG() + "PURPLE" + ConsoleColors.Reset());
+        Display.append(ConsoleColors.Cyan() + "CYAN" + ConsoleColors.Reset() + "     " + ConsoleColors.Cyan_BG() + "CYAN" + ConsoleColors.Reset());
+        Display.append(ConsoleColors.White() + "WHITE" + ConsoleColors.Reset() + "   " + ConsoleColors.White_BG() + "WHITE" + ConsoleColors.Reset());
     }
 }

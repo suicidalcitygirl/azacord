@@ -5,6 +5,7 @@ import java.lang.Thread;
 
 import scs.azacord.service.Config;
 import scs.azacord.service.Audio;
+import scs.azacord.service.ConsoleColors;
 import scs.azacord.discord.Discord;
 import scs.azacord.uinterface.Input;
 import scs.azacord.uinterface.Display;
@@ -15,7 +16,7 @@ public class Main {
 
         if (!Config.loadConfig()) {
 
-            System.out.println("Failed to load Config file!");
+            System.out.println(ConsoleColors.Red() + "Failed to load Config file!" + ConsoleColors.Reset());
             System.out.println("'" + Config.getConfigPath() + "' has been generated.");
             return;
         }
