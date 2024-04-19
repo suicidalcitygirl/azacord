@@ -47,7 +47,11 @@ public class Command {
         Display.append("::CHANNEL LIST::");
         var channels = Cache.Discord.getChannels();
         for (int i = 0; i < channels.length; ++i)
-            Display.append(i + ": " + channels[i].getName());
+            Display.append(
+                ConsoleColors.White() + i + ConsoleColors.Reset() + ": "
+                + channels[i].getGuild().block().getName()
+                + "::" + channels[i].getName()
+            );
     }
 
     private static void setChannel (String[] args) {
