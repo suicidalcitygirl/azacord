@@ -4,6 +4,7 @@ package scs.azacord.service;
 import java.util.Vector;
 
 import discord4j.core.object.entity.channel.GuildMessageChannel;
+import discord4j.core.object.entity.channel.PrivateChannel;
 import discord4j.core.object.entity.User;
 
 import scs.azacord.module.MessageCache;
@@ -18,6 +19,10 @@ public class Cache {
     private static String currentChannelName = "";
     public static synchronized String getCurrentChannelName () { return currentChannelName; }
     public static synchronized void setCurrentChannelName (String value) { currentChannelName = value; }
+    // CURRENT CHANNEL IS DM
+    private static boolean currentChannelIsDM = false;
+    public static synchronized boolean getCurrentChannelIsDM () { return currentChannelIsDM; }
+    public static synchronized void setCurrentChannelIsDM (boolean value) { currentChannelIsDM = value; }
 
     // OUTGOING MESSAGE QUEUE / MESSAGE SEND QUEUE
     private static Vector<MessageCache> messageSendQueue
@@ -71,6 +76,43 @@ public class Cache {
         }
         public static synchronized GuildMessageChannel[] getChannels () {
             return channelCache.toArray(new GuildMessageChannel[channelCache.size()]);
+        }
+
+        // PRIVATE CHANNEL CACHE
+        private static Vector<PrivateChannel> privateChannelCache
+            = new Vector<PrivateChannel>();
+        public static synchronized void addPrivateChannel (PrivateChannel channel) {
+            if (!privateChannelCache.contains(channel)) privateChannelCache.add(channel);
+        }
+        public static synchronized void removePrivateChannel (PrivateChannel subject) {
+            if (privateChannelCache.contains(subject)) privateChannelCache.remove(subject);
+        }
+        public static synchronized PrivateChannel getPrivateChannelById (String channelId) {
+            for (var channel : privateChannelCache)
+                if (channel.getId().asString().equals(channelId))
+                    return channel;
+            return null;
+        }
+        public static synchronized PrivateChannel[] getPrivateChannels () {
+            return privateChannelCache.toArray(new PrivateChannel[privateChannelCache.size()]);
+        }
+
+        // USER CACHE
+        private static Vector<User> userCache = new Vector<User>();
+        public static synchronized void addUser (User user) {
+            if (!userCache.contains(user)) userCache.add(user);
+        }
+        public static synchronized void removeUser (User user) {
+            if (userCache.contains(user)) userCache.remove(user);
+        }
+        public static synchronized User getUserById (String userId) {
+            for (var user : userCache)
+                if (user.getId().asString().equals(userId))
+                    return user;
+            return null;
+        }
+        public static synchronized User[] getUsers () {
+            return userCache.toArray(new User[userCache.size()]);
         }
     }
 }

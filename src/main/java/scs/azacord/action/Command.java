@@ -26,7 +26,13 @@ public class Command {
 
             case "/ls": listChannels(); break;
 
+            case "/dms": case "/pms": listUsers(); break;
+
+            case "/s": case "/k": case "/search": search(args); break;
+
             case "/join": case "/j": setChannel(args); break;
+
+            case "/dm": case "/pm": setChannelDM(args); break;
 
             case "/exit": case "/quit": Action.quit(); break;
 
@@ -56,6 +62,29 @@ public class Command {
             );
     }
 
+    private static void listUsers () {
+
+        var users = Cache.Discord.getUsers();
+        String message = "";
+        for (int i = 0; i < users.length; ++i)
+            message +=
+                ConsoleColors.White() + i + ConsoleColors.Reset() + ": "
+                + users[i].getUsername() + ", "
+            ;
+
+        Display.append("::PRIVATE MESSAGE LIST::");
+        Display.append(message);
+    }
+
+    private static void search (String[] args) {
+
+        Display.append(
+            ConsoleColors.Yellow()
+            + "NOT IMPLEMENTED!!"
+            + ConsoleColors.Reset()
+        );
+    }
+
     private static void setChannel (String[] args) {
 
         if (args.length < 2) return;
@@ -72,6 +101,7 @@ public class Command {
         Cache.setCurrentChannelName(
             Cache.Discord.getChannels()[index].getName()
         );
+        Cache.setCurrentChannelIsDM(false);
 
         try {
 
@@ -106,6 +136,61 @@ public class Command {
                 + ConsoleColors.Reset()
             );
             Display.append("You have probably tried to join a channel you don't have access to..");
+            Display.append("");
+            Display.append("    You're not in a very strange place; .. You're nowhere ....");
+        }
+    }
+
+    private static void setChannelDM (String[] args) {
+
+        if (args.length < 2) return;
+
+        int index = -1;
+        try { index = Integer.parseInt(args[1]);
+        } catch (Exception e) { return; }
+
+        if (index >= Cache.Discord.getUsers().length) return;
+
+        try {
+
+            var pmChannel = Cache.Discord.getUsers()[index].getPrivateChannel().block();
+            Cache.Discord.addPrivateChannel(pmChannel);
+
+            Cache.setCurrentChannelId(pmChannel.getId().asString());
+            Cache.setCurrentChannelName(Cache.Discord.getUsers()[index].getUsername());
+            Cache.setCurrentChannelIsDM(true);
+
+            Display.clear();
+            Display.clearTypists();
+            Audio.playSwitchChannel();
+
+            Snowflake now = Snowflake.of(Instant.now());
+            var messages = Cache.Discord.getPrivateChannelById(Cache.getCurrentChannelId())
+                .getMessagesBefore(now).take(100).collectList().block();
+            for (int i = messages.size() - 1; i >= 0; --i) {
+                Display.append(
+                    messages.get(i).getAuthor().get().getUsername(),
+                    messages.get(i).getContent()
+                );
+                for (var attachement : messages.get(i).getAttachments()) {
+                    Display.append(
+                        ConsoleColors.White() + " ─ " +
+                        ConsoleColors.Cyan() + attachement.getUrl() + ConsoleColors.Reset()
+                    );
+                }
+            }
+
+        } catch (Exception e) {
+
+            Cache.setCurrentChannelId("");
+            Cache.setCurrentChannelName("");
+
+            Display.system(
+                ConsoleColors.Red()
+                + "Failed to join DM with '" + Cache.Discord.getUsers()[index].getUsername() + "'"
+                + ConsoleColors.Reset()
+            );
+            Display.append("I don't actualy know exactly this has happened..");
             Display.append("");
             Display.append("    You're not in a very strange place; .. You're nowhere ....");
         }

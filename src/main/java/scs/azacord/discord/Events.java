@@ -1,6 +1,7 @@
 
 package scs.azacord.discord;
 
+import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.channel.Channel;
 import discord4j.core.object.entity.channel.MessageChannel;
@@ -58,6 +59,11 @@ public class Events {
             GuildMessageChannel gmChannel = (GuildMessageChannel)channel;
 
             Cache.Discord.addChannel(gmChannel);
+        }
+
+        for (var member : event.getGuild().getMembers().collectList().block()) {
+
+            Cache.Discord.addUser((User)member);
         }
     }
 
