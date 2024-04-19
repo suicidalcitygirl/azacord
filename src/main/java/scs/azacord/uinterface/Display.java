@@ -8,6 +8,8 @@ import java.time.Duration;
 
 import scs.azacord.service.Systemcall;
 import scs.azacord.service.Cache;
+import scs.azacord.service.ConsoleColors;
+import scs.azacord.service.Config;
 import scs.azacord.uinterface.Input;
 
 public class Display {
@@ -24,11 +26,28 @@ public class Display {
 
     public static void append (String sender, String message) { synchronized (mutex) {
 
-        screenBuffer.add("[" + sender + "]: " + message); trimCheck();
+        if (Config.getUseColors())
+            screenBuffer.add(
+                " " + ConsoleColors.Blue() + sender + ConsoleColors.Reset() + "  " + message
+            );
+        else
+            screenBuffer.add("[" + sender + "]: " + message);
+        trimCheck();
+    } }
+
+    public static void system (String message) { synchronized (mutex) {
+
+        if (Config.getUseColors())
+            screenBuffer.add(
+                " " + ConsoleColors.White() + "System" + ConsoleColors.Reset() + "  " + message
+            );
+        else
+            screenBuffer.add("{[System]}: " + message);
+        trimCheck();
     } }
     public static void append (String message) { synchronized (mutex) {
 
-        screenBuffer.add(message); trimCheck();
+        screenBuffer.add("  " + message); trimCheck();
     } }
     public static void clear () { synchronized (mutex) {
 

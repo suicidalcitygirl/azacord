@@ -18,7 +18,7 @@ public class Command {
 
     public static void exec (String input) {
 
-        Display.append("System", "Executing: " + input);
+        Display.system("Executing: " + input);
 
         String[] args = input.contains(" ") ? input.split(" ") : new String[]{input};
 
@@ -38,7 +38,7 @@ public class Command {
 
             case "/colors": case "/color": colorTest(); break;
 
-            default: Display.append("System", "Unknown Command!"); break;
+            default: Display.system("Unknown Command!"); break;
         }
     }
 
@@ -78,7 +78,10 @@ public class Command {
                 messages.get(i).getContent()
             );
             for (var attachement : messages.get(i).getAttachments()) {
-                Display.append(" ─ " + attachement.getUrl());
+                Display.append(
+                    ConsoleColors.White() + " ─ " +
+                    ConsoleColors.Cyan() + attachement.getUrl() + ConsoleColors.Reset()
+                );
             }
         }
     }

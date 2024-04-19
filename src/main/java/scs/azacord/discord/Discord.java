@@ -47,7 +47,7 @@ public class Discord {
 
     public static void loop () {
 
-        Display.append("System", "Connecting to Discord..");
+        Display.system("Connecting to Discord..");
 
         String token = Config.getToken();
         DiscordClient client = DiscordClient.create(token);
@@ -66,7 +66,7 @@ public class Discord {
             Events.onTypingStartEvent(event);
         });
 
-        Display.append("System", "Connected succesfully!");
+        Display.system("Connected succesfully!");
 
         while (!shouldStop) { try {
 

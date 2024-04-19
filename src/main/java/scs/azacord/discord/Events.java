@@ -12,6 +12,7 @@ import discord4j.core.event.domain.lifecycle.ReadyEvent;
 
 import scs.azacord.service.Cache;
 import scs.azacord.service.Audio;
+import scs.azacord.service.ConsoleColors;
 import scs.azacord.uinterface.Display;
 
 public class Events {
@@ -21,8 +22,8 @@ public class Events {
         var self = event.getSelf();
         Cache.Discord.setSelfUser(self);
 
-        Display.append("System", "Session: " + event.getSessionId());
-        Display.append("System", "Logged in as '" + self.getUsername() + "'");
+        Display.system("Session: " + event.getSessionId());
+        Display.system("Logged in as '" + self.getUsername() + "'");
     }
 
     public static void onMessageCreateEvent (MessageCreateEvent event) {
@@ -37,7 +38,10 @@ public class Events {
                 message.getContent()
             );
             for (var attachement : message.getAttachments()) {
-                Display.append(" ─ " + attachement.getUrl());
+                Display.append(
+                    ConsoleColors.White() + " ─ " +
+                    ConsoleColors.Cyan() + attachement.getUrl() + ConsoleColors.Reset()
+                );
             }
 
             Display.removeTyper(message.getAuthor().get().getUsername());

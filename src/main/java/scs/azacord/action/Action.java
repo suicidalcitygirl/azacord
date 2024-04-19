@@ -11,7 +11,7 @@ public class Action {
 
     public static void quit () {
 
-        Display.append("System", "Exiting...");
+        Display.system("Exiting...");
         Discord.stop();
         Input.stop();
         Display.tick();
