@@ -62,6 +62,8 @@ public class Command {
         try { index = Integer.parseInt(args[1]);
         } catch (Exception e) { return; }
 
+        if (index >= Cache.Discord.getChannels().length) return;
+
         Cache.setCurrentChannelId(
             Cache.Discord.getChannels()[index].getId().asString()
         );
@@ -69,24 +71,41 @@ public class Command {
             Cache.Discord.getChannels()[index].getName()
         );
 
-        Display.clear();
-        Display.clearTypists();
-        Audio.playSwitchChannel();
+        try {
 
-        Snowflake now = Snowflake.of(Instant.now());
-        var messages = Cache.Discord.getChannelById(Cache.getCurrentChannelId())
-            .getMessagesBefore(now).take(100).collectList().block();
-        for (int i = messages.size() - 1; i >= 0; --i) {
-            Display.append(
-                messages.get(i).getAuthor().get().getUsername(),
-                messages.get(i).getContent()
-            );
-            for (var attachement : messages.get(i).getAttachments()) {
+            Display.clear();
+            Display.clearTypists();
+            Audio.playSwitchChannel();
+
+            Snowflake now = Snowflake.of(Instant.now());
+            var messages = Cache.Discord.getChannelById(Cache.getCurrentChannelId())
+                .getMessagesBefore(now).take(100).collectList().block();
+            for (int i = messages.size() - 1; i >= 0; --i) {
                 Display.append(
-                    ConsoleColors.White() + " ─ " +
-                    ConsoleColors.Cyan() + attachement.getUrl() + ConsoleColors.Reset()
+                    messages.get(i).getAuthor().get().getUsername(),
+                    messages.get(i).getContent()
                 );
+                for (var attachement : messages.get(i).getAttachments()) {
+                    Display.append(
+                        ConsoleColors.White() + " ─ " +
+                        ConsoleColors.Cyan() + attachement.getUrl() + ConsoleColors.Reset()
+                    );
+                }
             }
+
+        } catch (Exception e) {
+
+            Cache.setCurrentChannelId("");
+            Cache.setCurrentChannelName("");
+
+            Display.system(
+                ConsoleColors.Red()
+                + "Failed to join '" + Cache.Discord.getChannels()[index].getName() + "'"
+                + ConsoleColors.Reset()
+            );
+            Display.append("You have probably tried to join a channel you don't have access to..");
+            Display.append("");
+            Display.append("    You're not in a very strange place; .. You're nowhere ....");
         }
     }
 
