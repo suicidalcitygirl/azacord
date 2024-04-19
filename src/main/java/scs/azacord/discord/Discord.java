@@ -12,6 +12,7 @@ import discord4j.core.event.domain.lifecycle.ReadyEvent;
 
 import scs.azacord.service.Config;
 import scs.azacord.service.Cache;
+import scs.azacord.service.ConsoleColors;
 import scs.azacord.module.MessageCache;
 import scs.azacord.uinterface.Display;
 
@@ -78,9 +79,20 @@ public class Discord {
 
                 if (messageObject.targetChannelId == "") continue;
 
-                Cache.Discord.getChannelById(
-                    messageObject.targetChannelId
-                ).createMessage(messageObject.content).block();
+                try {
+
+                    Cache.Discord.getChannelById(
+                        messageObject.targetChannelId
+                    ).createMessage(messageObject.content).block();
+
+                } catch (Exception e) {
+
+                    Display.system(
+                        ConsoleColors.Red()
+                        + "Failed to send message!"
+                        + ConsoleColors.Reset()
+                    );
+                }
             }
 
         } catch (Exception e) {} }
