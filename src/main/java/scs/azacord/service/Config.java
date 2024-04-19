@@ -18,6 +18,7 @@ public class Config {
     private static String typeAlertSound = ""; public static String getTypeAlertSound () { return typeAlertSound; }
     private static String quitSound = ""; public static String getQuitSound () { return quitSound; }
     private static String useColors = ""; public static boolean getUseColors () { return useColors.equals("true"); }
+    private static String disableAttachements = ""; public static boolean getDisableAttachements () { return disableAttachements.equals("true"); }
 
 
     private static String configPath = System.getProperty("user.home") + "/.config/azacord.conf";
@@ -56,6 +57,7 @@ public class Config {
                         case "typeAlertSound": typeAlertSound = values[1]; break;
                         case "quitSound": quitSound = values[1]; break;
                         case "useColors": useColors = values[1]; break;
+                        case "disableAttachements": disableAttachements = values[1]; break;
                     }
                 }
 
@@ -83,6 +85,10 @@ public class Config {
                 if (useColors.equals("")) {
                     Files.writeString(configFile.toPath(), "\n# default: true\nuseColors=true", StandardOpenOption.APPEND);
                     useColors = "true";
+                }
+                if (disableAttachements.equals("")) {
+                    Files.writeString(configFile.toPath(), "\n# default: false\ndisableAttachements=false", StandardOpenOption.APPEND);
+                    disableAttachements = "false";
                 }
 
                 return true;
@@ -127,6 +133,8 @@ public class Config {
                 + "\nquitSound=NULL"
                 + "\n# default: true"
                 + "\nuseColors=true"
+                + "\n# default: false"
+                + "\ndisableAttachements=false"
                 + "\n"
                 + "\n"
                 + "\n"

@@ -38,7 +38,7 @@ public class Command {
 
             case "/colors": case "/color": colorTest(); break;
 
-            default: Display.system("Unknown Command!"); break;
+            default: Display.append(ConsoleColors.Red() + "Unknown Command!" + ConsoleColors.Reset()); break;
         }
     }
 
@@ -94,6 +94,11 @@ public class Command {
     private static void attach (String[] args) {
 
         if (args.length < 2) return;
+
+        if (Config.getDisableAttachements()) {
+            Display.append(ConsoleColors.Red() + "Attachements are disabled!" + ConsoleColors.Reset());
+            return;
+        }
 
         try {
             Cache.Discord.getChannelById(Cache.getCurrentChannelId())
