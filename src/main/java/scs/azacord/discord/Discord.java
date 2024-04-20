@@ -16,6 +16,7 @@ import scs.azacord.service.Cache;
 import scs.azacord.service.ConsoleColors;
 import scs.azacord.module.MessageCache;
 import scs.azacord.uinterface.Display;
+import scs.azacord.action.Action;
 
 public class Discord {
 
@@ -51,64 +52,74 @@ public class Discord {
 
         Display.system("Connecting to Discord..");
 
-        String token = Config.getToken();
-        GatewayDiscordClient gateway = DiscordClient.create(token)
-            .gateway().setEnabledIntents(IntentSet.all()).login().block();
+        try {
 
-        gateway.on(ReadyEvent.class).subscribe(event -> {
-            Events.onReadyEvent(event);
-        });
-        gateway.on(MessageCreateEvent.class).subscribe(event -> {
-            Events.onMessageCreateEvent(event);
-        });
-        gateway.on(GuildCreateEvent.class).subscribe(event -> {
-            Events.onGuildCreateEvent(event);
-        });
-        gateway.on(TypingStartEvent.class).subscribe(event -> {
-            Events.onTypingStartEvent(event);
-        });
+            String token = Config.getToken();
+            GatewayDiscordClient gateway = DiscordClient.create(token)
+                .gateway().setEnabledIntents(IntentSet.all()).login().block();
 
-        Display.system("Connected succesfully!");
+            gateway.on(ReadyEvent.class).subscribe(event -> {
+                Events.onReadyEvent(event);
+            });
+            gateway.on(MessageCreateEvent.class).subscribe(event -> {
+                Events.onMessageCreateEvent(event);
+            });
+            gateway.on(GuildCreateEvent.class).subscribe(event -> {
+                Events.onGuildCreateEvent(event);
+            });
+            gateway.on(TypingStartEvent.class).subscribe(event -> {
+                Events.onTypingStartEvent(event);
+            });
 
-        while (!shouldStop) { try {
+            Display.system("Connected succesfully!");
 
-            Thread.sleep(500);
+            while (!shouldStop) { try {
 
-            if (Cache.outgoingMessageCount() != 0) {
+                Thread.sleep(500);
 
-                MessageCache messageObject = Cache.popOutgoingMessage();
+                if (Cache.outgoingMessageCount() != 0) {
 
-                if (messageObject.targetChannelId == "") continue;
+                    MessageCache messageObject = Cache.popOutgoingMessage();
 
-                try {
+                    if (messageObject.targetChannelId == "") continue;
 
-                    if (Cache.getCurrentChannelIsDM())
-                        Cache.Discord.getPrivateChannelById(
-                            messageObject.targetChannelId
-                        ).createMessage(messageObject.content).block();
-                    else
-                        Cache.Discord.getChannelById(
-                            messageObject.targetChannelId
-                        ).createMessage(messageObject.content).block();
+                    try {
 
-                } catch (Exception e) {
+                        if (Cache.getCurrentChannelIsDM())
+                            Cache.Discord.getPrivateChannelById(
+                                messageObject.targetChannelId
+                            ).createMessage(messageObject.content).block();
+                        else
+                            Cache.Discord.getChannelById(
+                                messageObject.targetChannelId
+                            ).createMessage(messageObject.content).block();
 
-                    Display.system(
-                        ConsoleColors.Red()
-                        + "Failed to send message!"
-                        + ConsoleColors.Reset()
-                    );
-                    Display.system(
-                        ConsoleColors.Red()
-                        + e.toString()
-                        + ConsoleColors.Reset()
-                    );
+                    } catch (Exception e) {
+
+                        Display.system(
+                            ConsoleColors.Red()
+                            + "Failed to send message!"
+                            + ConsoleColors.Reset()
+                        );
+                        Display.system(
+                            ConsoleColors.Red()
+                            + e.toString()
+                            + ConsoleColors.Reset()
+                        );
+                    }
                 }
-            }
 
-        } catch (Exception e) {} }
+            } catch (Exception e) {} }
 
-        gateway.logout().block();
-        running = false;
+            gateway.logout().block();
+            running = false;
+
+        } catch (Exception e) {
+
+            running = false;
+            Display.system(ConsoleColors.Red() + e + ConsoleColors.Reset());
+            Display.tick();
+            Action.quit();
+        }
     }
 }
