@@ -144,6 +144,13 @@ public class Command {
                     );
                 }
             }
+            if (messages.size() == 0)
+                Display.append(
+                    "This beginning of #"
+                    + ConsoleColors.White()
+                    + Cache.Discord.getChannels()[index].getName()
+                    + ConsoleColors.Reset() + "."
+                );
 
         } catch (Exception e) {
 
@@ -199,6 +206,13 @@ public class Command {
                     );
                 }
             }
+            if (messages.size() == 0)
+                Display.append(
+                    "This beginning of your DM with "
+                    + ConsoleColors.White()
+                    + Cache.Discord.getUsers()[index].getUsername()
+                    + ConsoleColors.Reset() + "."
+                );
 
         } catch (Exception e) {
 
