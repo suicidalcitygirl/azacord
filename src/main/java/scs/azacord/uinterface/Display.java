@@ -28,12 +28,23 @@ public class Display {
 
     public static void append (String sender, String message) { synchronized (mutex) {
 
-        if (Config.getUseColors())
-            screenBuffer.add(
-                " " + ConsoleColors.Blue() + sender + ConsoleColors.Reset() + "  " + message
-            );
-        else
-            screenBuffer.add("[" + sender + "]: " + message);
+        if (message.contains("<@" + Cache.Discord.getSelfUser().getId().asString() + ">")) {
+            if (Config.getUseColors())
+                screenBuffer.add(
+                    ConsoleColors.Yellow() + "  @ "
+                    +  sender + ConsoleColors.Reset() + "  "
+                    + ConsoleColors.White() + message + ConsoleColors.Reset()
+                );
+            else
+                screenBuffer.add("! @ [" + sender + "]: " + message);
+        } else {
+            if (Config.getUseColors())
+                screenBuffer.add(
+                    " " + ConsoleColors.Blue() + sender + ConsoleColors.Reset() + "  " + message
+                );
+            else
+                screenBuffer.add("[" + sender + "]: " + message);
+        }
         trimCheck();
     } }
 
