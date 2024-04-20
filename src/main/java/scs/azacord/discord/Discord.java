@@ -75,7 +75,7 @@ public class Discord {
 
             while (!shouldStop) { try {
 
-                Thread.sleep(500);
+                Thread.sleep(100);
 
                 if (Cache.outgoingMessageCount() != 0) {
 
