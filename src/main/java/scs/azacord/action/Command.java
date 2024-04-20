@@ -244,26 +244,53 @@ public class Command {
             return;
         }
 
-        try {
-            Cache.Discord.getChannelById(Cache.getCurrentChannelId())
-                .createMessage(messageSpec -> {
+        if (args.length > 2) { if (args[1].equals("s") || args[1].equals("-s")) {
 
-                for (int i = 1; i < args.length; ++i) {
+
+            try {
+                Cache.Discord.getChannelById(Cache.getCurrentChannelId())
+                    .createMessage(messageSpec -> {
+
+                    String filePath = args[2];
+                    if (args.length > 3) for (int i = 3; i < args.length; ++i)
+                        filePath += " " + args[i];
+
                     try {
-                        File attachementFile = new File(args[i]);
-                        if (!(attachementFile.exists() && !attachementFile.isDirectory()))
-                            continue;
-
-                        messageSpec.addFile(
-                            attachementFile.getName(),
-                            new FileInputStream(attachementFile)
-                        );
+                        File attachementFile = new File(filePath);
+                        if (attachementFile.exists() && !attachementFile.isDirectory())
+                            messageSpec.addFile(
+                                attachementFile.getName(),
+                                new FileInputStream(attachementFile)
+                            );
                     } catch (Exception e) {}
-                }
 
-            }).block();
+                }).block();
 
-        } catch (Exception e) {}
+            } catch (Exception e) {}
+
+        } } else {
+
+            try {
+                Cache.Discord.getChannelById(Cache.getCurrentChannelId())
+                    .createMessage(messageSpec -> {
+
+                    for (int i = 1; i < args.length; ++i) {
+                        try {
+                            File attachementFile = new File(args[i]);
+                            if (!(attachementFile.exists() && !attachementFile.isDirectory()))
+                                continue;
+
+                            messageSpec.addFile(
+                                attachementFile.getName(),
+                                new FileInputStream(attachementFile)
+                            );
+                        } catch (Exception e) {}
+                    }
+
+                }).block();
+
+            } catch (Exception e) {}
+        }
     }
 
     private static void colorTest () {
