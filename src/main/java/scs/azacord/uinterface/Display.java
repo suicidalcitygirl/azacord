@@ -188,12 +188,11 @@ public class Display {
         int width = Systemcall.getConsoleWidth();
         Systemcall.canonicalEnable();
 
-        for (int i = 0; i < inputFieldCache.length() + 2; ++i)
-            System.out.print(
-                Config.getInputFieldOverflowFix()
-                ? "    \b\b\b\b\b "
-                : "    \b\b\b\b\b"
-            );
+        if (Config.getInputFieldOverflowFix())
+            System.out.print("\r");
+
+        else for (int i = 0; i < inputFieldCache.length() + 2; ++i)
+            System.out.print("    \b\b\b\b\b");
 
         inputFieldCache = ">: " + (
             inputCache.length() > width - 16
