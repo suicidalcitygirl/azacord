@@ -78,12 +78,30 @@ public class Input {
         }
     }
 
+    private static String processMentions (String message) {
+
+        String[] words = message.contains(" ") ? message.split(" ") : new String[]{message};
+        for (String word : words) {
+            if (word.equals("")) continue;
+            if (word.charAt(0) == '@' && word.length() > 1) {
+                var user = Cache.Discord.getUserByName(word.substring(1));
+                if (user != null) message = message.replace(word, "<@" + user.getId().asString() + ">");
+            }
+        }
+        return message;
+    }
+
+    private static String processFormatting (String message) { return message.replace("\\n","\n"); }
+
     private static void onReturn () {
 
         if (getValue().length() == 0) { System.out.print("  \b\b\b\b"); return; }
 
         if (getValue().charAt(0) == '/') scs.azacord.action.Command.exec(getValue());
-        else Cache.queueOutgoingMessage(Cache.getCurrentChannelId(), getValue().replace("\\n","\n"));
+        else Cache.queueOutgoingMessage(
+            Cache.getCurrentChannelId(),
+            processFormatting(processMentions(getValue()))
+        );
 
         setValue("");
     }

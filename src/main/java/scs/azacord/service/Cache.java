@@ -111,6 +111,12 @@ public class Cache {
                     return user;
             return null;
         }
+        public static synchronized User getUserByName (String username) {
+            for (var user : userCache)
+                if (user.getUsername().equals(username))
+                    return user;
+            return null;
+        }
         public static synchronized User[] getUsers () {
             return userCache.toArray(new User[userCache.size()]);
         }
