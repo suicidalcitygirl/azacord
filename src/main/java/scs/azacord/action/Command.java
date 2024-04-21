@@ -46,6 +46,8 @@ public class Command {
 
             case "/togglesound": toggleSound(); break;
 
+            case "/profile": case "/pf": case "/p": showProfile(args); break;
+
             default: Display.append(ConsoleColors.Red() + "Unknown Command!" + ConsoleColors.Reset()); break;
         }
     }
@@ -322,6 +324,40 @@ public class Command {
                 ? ConsoleColors.Red() + "disabled" + ConsoleColors.Reset()
                 : ConsoleColors.Green() + "enabled" + ConsoleColors.Reset()
             )
+        );
+    }
+
+    private static void showProfile (String[] args) {
+
+        if (args.length < 2) return;
+
+        var user = Cache.Discord.getUserByName(args[1]);
+        if (user == null) return;
+
+        Display.append(
+            "GlobalName: " + ConsoleColors.White()
+            + user.getGlobalName() + ConsoleColors.Reset()
+        );
+        Display.append(
+            "Username: " + ConsoleColors.White()
+            + user.getUsername() + ConsoleColors.Reset()
+        );
+        Display.append(
+            "IsBot: " + ConsoleColors.White()
+            + (user.isBot() ? "true" : "false") + ConsoleColors.Reset()
+        );
+        Display.append(
+            "Id: " + ConsoleColors.White()
+            + user.getId().asString() + ConsoleColors.Reset()
+        );
+        Display.append(
+            "Avatar: " + ConsoleColors.Cyan()
+            + user.getAvatarUrl() + ConsoleColors.Reset()
+        );
+        Display.append(
+            "Banner: " + ConsoleColors.Cyan()
+            + (user.getBannerUrl().isEmpty() ? "" : user.getBannerUrl().get())
+            + ConsoleColors.Reset()
         );
     }
 }
