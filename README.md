@@ -28,8 +28,17 @@ put ur bot token in the config, tehn launch the program again
 
 ## step 3
 now ur in!
+
 /ls - show channels
 /join X - join a channel, where X is channel #
+
+/dms - view dms available
+/dm X - join a dm, where X is the dm index #
+
+/k Q - search users and channels, where Q is the query
+
+/a X - attach a file, where X is file path on local machine
+/n - view notifications
 
 
 
