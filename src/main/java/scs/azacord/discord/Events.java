@@ -46,6 +46,8 @@ public class Events {
             }
 
             Display.removeTyper(message.getAuthor().get().getUsername());
+            
+            Audio.playPing();
 
         } else {
 
@@ -61,8 +63,9 @@ public class Events {
                     + ConsoleColors.White() + message.getAuthor().get().getUsername() + ConsoleColors.Reset()
                     + " '/dm " + String.valueOf(index) + "' to view."
                 );
+                Audio.playPing();
 
-            } else {
+            } else if (message.getContent().contains("<@" + Cache.Discord.getSelfUser().getId().asString() + ">")) {
 
                 var channels = Cache.Discord.getChannels(); int index = -1;
                 for (int i = 0; i < channels.length; ++i)
@@ -71,15 +74,14 @@ public class Events {
                 if (index == -1) return;
 
                 Cache.addNotification(
-                    "Message in "
+                    "Mention in "
                     + ConsoleColors.White() + channels[index].getGuild().block().getName() + ConsoleColors.Reset()
                     + "::" + ConsoleColors.White() + channels[index].getName() + ConsoleColors.Reset()
                     + " '/j " + String.valueOf(index) + "' to view."
                 );
+                Audio.playPing();
             }
         }
-
-        Audio.playPing();
     }
 
     public static void onGuildCreateEvent (GuildCreateEvent event) {
