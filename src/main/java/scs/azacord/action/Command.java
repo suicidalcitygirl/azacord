@@ -108,10 +108,10 @@ public class Command {
             ;
 
         Display.append(ConsoleColors.White() + "::CHANNEL SEARCH RESULTS::" + ConsoleColors.Reset());
-        for (String entry : channelList) if (entry.contains(query)) Display.append(entry);
+        for (String entry : channelList) if (entry.toLowerCase().contains(query.toLowerCase())) Display.append(entry);
 
         Display.append(ConsoleColors.White() + "::USER DM SEARCH RESULTS::" + ConsoleColors.Reset());
-        for (String entry : dmList)  if (entry.contains(query)) Display.append(entry);
+        for (String entry : dmList) if (entry.toLowerCase().contains(query.toLowerCase())) Display.append(entry);
     }
 
     private static void setChannel (String[] args) {
