@@ -1,11 +1,14 @@
+# Azacord, Discord right at your fingertips
 
-# what is this?
-its a client made for use with bot clients
-the idea is u can use it in the cli for a more simple discord expeirence :D
+Azacord is a client designed for use with bot clients, offering a simplified Discord experience through the command-line interface (CLI).
 
-# installation / getting started
-## step 1
-first! u need a bot account, heres how to make one incase u dont know:
+## What is Azacord?
+
+Azacord is a client made for use with bot clients. The idea is to provide a more straightforward Discord experience through the CLI.
+
+# Installation / Getting started
+## Step 1
+First! u need a bot account, heres how to make one incase u dont know:
 https://autocode.com/guides/how-to-build-a-discord-bot/
 ignore the code, focus is to create ur bot account
 
@@ -16,12 +19,11 @@ its really unfair!
 
 also make sure all intents are set, presence, server members, and message content
 
-
 ## step 2
 anyway moving on, next is to clone the repo,
 or see the releases page on this repo
 
-tehn compile it, do this with `./build.sh`, then run `./install.sh`
+compile it, do this with `./build.sh`, then run `./install.sh`
 and run it using the newly install command `azacord`,
 the first time u run it, it will generate the config and exit
 put ur bot token in the config, tehn launch the program again
@@ -49,3 +51,6 @@ https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/System.ht
 
 discord4j api reference:
 https://javadoc.io/static/com.discord4j/discord4j-core/3.2.0/discord4j/core/GatewayDiscordClient.html
+
+# endresult
+
