@@ -74,6 +74,11 @@ public class Command {
                 + users[i].getUsername() + ", "
             ;
 
+        int consoleWidth = Systemcall.getConsoleWidth();
+        if (message.length() > consoleWidth)
+            for (int i = 0; i < (int)(message.length() / consoleWidth); ++i)
+                Display.append("");
+
         Display.append(ConsoleColors.White() + "::PRIVATE MESSAGE LIST::" + ConsoleColors.Reset());
         Display.append(message);
     }
