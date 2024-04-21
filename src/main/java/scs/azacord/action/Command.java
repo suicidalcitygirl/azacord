@@ -48,6 +48,8 @@ public class Command {
 
             case "/profile": case "/pf": case "/p": showProfile(args); break;
 
+            case "/notifications": case "/n": showNotifications(); break;
+
             default: Display.append(ConsoleColors.Red() + "Unknown Command!" + ConsoleColors.Reset()); break;
         }
     }
@@ -364,5 +366,21 @@ public class Command {
             + (user.getBannerUrl().isEmpty() ? "" : user.getBannerUrl().get())
             + ConsoleColors.Reset()
         );
+    }
+
+    private static void showNotifications () {
+
+        if (Cache.getNotificationCount() == 0) {
+
+            Display.append("There are no notifications currently.");
+            return;
+        }
+
+        for (String notification : Cache.getNotifications()) {
+
+            Display.append(notification);
+        }
+
+        Cache.clearNotifications();
     }
 }

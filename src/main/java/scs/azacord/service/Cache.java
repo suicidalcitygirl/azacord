@@ -42,6 +42,16 @@ public class Cache {
         return messageSendQueue.size();
     }
 
+    // NOTIFICATION CACHE
+    private static Vector<String> notifications = new Vector<String>();
+    public static synchronized int getNotificationCount () { return notifications.size(); }
+    public static synchronized void addNotification (String message) { notifications.add(message); }
+    public static synchronized void trimNotifications () { notifications.remove(0); }
+    public static synchronized void clearNotifications () { notifications.clear(); }
+    public static synchronized String[] getNotifications () {
+        return notifications.toArray(new String[notifications.size()]);
+    }
+
     public class Discord {
 
         // SELF USER CACHE

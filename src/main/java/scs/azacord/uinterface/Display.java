@@ -122,7 +122,7 @@ public class Display {
     private static int timer;
 
     private static String inputCache;
-    private static int screenBufferCache, typingUserCache, widthCache, heightCache;
+    private static int screenBufferCache, typingUserCache, widthCache, heightCache, notificationCache;
 
     private static void runChecks () {
 
@@ -132,6 +132,10 @@ public class Display {
 
         if (typingUserCache != typingUsers.size()) {
             typingUserCache = typingUsers.size(); render();
+        }
+
+        if (notificationCache != Cache.getNotificationCount()) {
+            notificationCache = Cache.getNotificationCount(); render();
         }
 
         if (inputCache != Input.getValue()) {
@@ -170,10 +174,20 @@ public class Display {
             for (int i = 2; i < height - screenBuffer.size(); ++i)
                 System.out.println();
 
+        String notificationCount = String.valueOf(Cache.getNotificationCount());
+        if (notificationCount.length() > 2) notificationCount = "99";
+        System.out.print(
+            notificationCount.equals("0") ? "──"
+            : ConsoleColors.Yellow() + "⋅"
+            + ConsoleColors.White() + notificationCount + ConsoleColors.Reset()
+        );
+        System.out.print(notificationCount.length() == 1 ? "──" : "─");
+
         String channel = Cache.getCurrentChannelName();
-        for (int i = 0; i < 4; ++i) System.out.print("─");
         System.out.print(channel);
+
         for (int i = 0; i < 2; ++i) System.out.print("─");
+
         String typeStatus = generateTypingStatus(width - channel.length() - 6);
         // typeStatus = typeStatus.length() > 0 ? "┤" + typeStatus + "├" : typeStatus;
         // typeStatus = typeStatus.length() > 0 ? "⋅" + typeStatus + "⋅" : typeStatus;
