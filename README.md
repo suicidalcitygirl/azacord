@@ -2,6 +2,13 @@
 
 Azacord is a client designed for use with bot clients, offering a simplified Discord experience through the command-line interface (CLI).
 
+## Table of Contents
+- [Azacord](#what-is-azacord)
+- [Installation](#installation)
+- [Additional Information](#useful-links-for-development)
+- [Contributing](#contributing)
+- [Endresult](#end-result)
+
 ## What is Azacord?
 
 Azacord is a client made for use with bot clients. The idea is to provide a more straightforward Discord experience through the CLI.
@@ -52,5 +59,10 @@ https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/System.ht
 discord4j api reference:
 https://javadoc.io/static/com.discord4j/discord4j-core/3.2.0/discord4j/core/GatewayDiscordClient.html
 
-# endresult
+## Contributing
+
+We welcome contributions from the community to help improve Chatify further. Whether it's fixing bugs, adding new features, or enhancing the UI, your contributions are highly appreciated. Please check out our contribution guidelines for more information.
+
+# End result
+<img src="image.png" alt="alt text">
 
