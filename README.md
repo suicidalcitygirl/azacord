@@ -51,7 +51,7 @@ Now you're in!
 
 ## Contributing
 
-We welcome contributions from the community to help improve Azacord further. Whether it's fixing bugs, adding new features, or enhancing the UI, your contributions are highly appreciated. Please check out our contribution guidelines for more information.
+Im open to contributions from the community to help improve Azacord further. Whether it's fixing bugs, adding new features, or enhancing the UI, your contributions are highly appreciated. Please feel free to contact me directly if you like, my discord name is the same as my github :D
 
 # End Result
 
