@@ -55,4 +55,4 @@ We welcome contributions from the community to help improve Azacord further. Whe
 
 # End Result
 
-![Azacord End Result](image.png)
+![Azacord End Result](images/image0.png)
