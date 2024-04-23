@@ -15,6 +15,12 @@ Azacord is a client made for use with bot clients. The idea is to provide a more
 
 # Installation
 
+### Step 0: introduction
+
+azacord only designed only to  works on gnulinux platforms, due to system calls relying on stty and datetimectl. namely in `src/main/java/scs/azacord/service/Systemcall.java`
+
+if you would like to help add support for windows or mac platforms, please open a pull request or contact me direct, my discord name is the same as my github name :)
+
 ### Step 1: Creating a Bot Account
 
 First, you need a bot account. Here's how to create one:
