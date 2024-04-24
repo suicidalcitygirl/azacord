@@ -6,6 +6,7 @@ import scs.azacord.uinterface.Display;
 import scs.azacord.uinterface.Input;
 import scs.azacord.service.Systemcall;
 import scs.azacord.service.Audio;
+import scs.azacord.service.Config;
 
 public class Action {
 
@@ -22,5 +23,36 @@ public class Action {
 
         Systemcall.canonicalEnable();
         System.exit(0);
+    }
+
+    public static void performOnMessageAction (String author, String message) {
+
+        String reggex = Config.getOnLocalChannelRecvCommand();
+        if (reggex.equals("") || reggex.equals("NULL")) return;
+
+        author = author.replace("<","");
+        author = author.replace(">","");
+        author = author.replace("|","");
+        author = author.replace(";","");
+        author = author.replace("&","");
+        author = author.replace("'","");
+        author = author.replace("\"","");
+        author = author.replace("$","");
+        author = author.replace("!","");
+
+        message = message.replace("<","");
+        message = message.replace(">","");
+        message = message.replace("|","");
+        message = message.replace(";","");
+        message = message.replace("&","");
+        message = message.replace("'","");
+        message = message.replace("\"","");
+        message = message.replace("$","");
+        message = message.replace("!","");
+
+        reggex = reggex.replace("$1", author);
+        reggex = reggex.replace("$2", message);
+
+        Systemcall.executeDetach(new String[]{"/bin/bash","-c",reggex});
     }
 }

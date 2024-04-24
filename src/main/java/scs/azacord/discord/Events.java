@@ -15,6 +15,7 @@ import scs.azacord.service.Cache;
 import scs.azacord.service.Audio;
 import scs.azacord.service.ConsoleColors;
 import scs.azacord.uinterface.Display;
+import scs.azacord.action.Action;
 
 public class Events {
 
@@ -46,8 +47,13 @@ public class Events {
             }
 
             Display.removeTyper(message.getAuthor().get().getUsername());
-            
+
             Audio.playPing();
+
+            Action.performOnMessageAction(
+                message.getAuthor().get().getUsername(),
+                message.getContent()
+            );
 
         } else {
 

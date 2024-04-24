@@ -91,4 +91,19 @@ public class Systemcall {
         } catch (Exception e) { return -1; }
         return 0;
     }
+
+    public static void execute (String[] a) {
+
+        try {
+            Runtime.getRuntime().exec(a).waitFor();
+
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+    public static void executeDetach (String[] a) {
+
+        try {
+            Runtime.getRuntime().exec(a);
+
+        } catch (Exception e) { e.printStackTrace(); }
+    }
 }

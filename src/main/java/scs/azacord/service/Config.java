@@ -21,6 +21,7 @@ public class Config {
     private static String disableAttachements = ""; public static boolean getDisableAttachements () { return disableAttachements.equals("true"); }
     private static String inputFieldOverflowFix = ""; public static boolean getInputFieldOverflowFix () { return inputFieldOverflowFix.equals("true"); }
     private static String useRedUsernames = ""; public static boolean getUseRedUsernames () { return useRedUsernames.equals("true"); }
+    private static String onLocalChannelRecvCommand = ""; public static String getOnLocalChannelRecvCommand () { return onLocalChannelRecvCommand; }
 
     private static String configPath = System.getProperty("user.home") + "/.config/azacord.conf";
     public static String getConfigPath () { return configPath; }
@@ -61,6 +62,7 @@ public class Config {
                         case "disableAttachements": disableAttachements = values[1]; break;
                         case "inputFieldOverflowFix": inputFieldOverflowFix = values[1]; break;
                         case "useRedUsernames": useRedUsernames = values[1]; break;
+                        case "onLocalChannelRecvCommand": onLocalChannelRecvCommand = values[1]; break;
                     }
                 }
 
@@ -100,6 +102,10 @@ public class Config {
                 if (useRedUsernames.equals("")) {
                     Files.writeString(configFile.toPath(), "\n# default: false\nuseRedUsernames=false", StandardOpenOption.APPEND);
                     useRedUsernames = "false";
+                }
+                if (onLocalChannelRecvCommand.equals("")) {
+                    Files.writeString(configFile.toPath(), "\n# default: NULL\nonLocalChannelRecvCommand=NULL", StandardOpenOption.APPEND);
+                    onLocalChannelRecvCommand = "NULL";
                 }
 
                 return true;
@@ -151,6 +157,11 @@ public class Config {
                 + "\ninputFieldOverflowFix=false"
                 + "\n# default: false"
                 + "\nuseRedUsernames=false"
+                + "\n# default: NULL"
+                + "\n replaces $1 with the message author, and $2 with the message content"
+                + "\n EG: echo '$1 said: $2' | text2wave -o tmp.wav -eval '(voice_kal_diphone)';mplayer tmp.wav;rm tmp.wav"
+                + "\n azacord will replace all <,>,|,\",',;,~,$ chars with \"\" || null"
+                + "\nonLocalChannelRecvCommand=NULL"
                 + "\n"
                 + "\n"
                 + "\n"
