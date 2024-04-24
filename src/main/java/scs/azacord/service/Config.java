@@ -20,6 +20,7 @@ public class Config {
     private static String useColors = ""; public static boolean getUseColors () { return useColors.equals("true"); }
     private static String disableAttachements = ""; public static boolean getDisableAttachements () { return disableAttachements.equals("true"); }
     private static String inputFieldOverflowFix = ""; public static boolean getInputFieldOverflowFix () { return inputFieldOverflowFix.equals("true"); }
+    private static String useRedUsernames = ""; public static boolean getUseRedUsernames () { return useRedUsernames.equals("true"); }
 
     private static String configPath = System.getProperty("user.home") + "/.config/azacord.conf";
     public static String getConfigPath () { return configPath; }
@@ -59,6 +60,7 @@ public class Config {
                         case "useColors": useColors = values[1]; break;
                         case "disableAttachements": disableAttachements = values[1]; break;
                         case "inputFieldOverflowFix": inputFieldOverflowFix = values[1]; break;
+                        case "useRedUsernames": useRedUsernames = values[1]; break;
                     }
                 }
 
@@ -94,6 +96,10 @@ public class Config {
                 if (inputFieldOverflowFix.equals("")) {
                     Files.writeString(configFile.toPath(), "\n# default: false\ninputFieldOverflowFix=false", StandardOpenOption.APPEND);
                     inputFieldOverflowFix = "false";
+                }
+                if (useRedUsernames.equals("")) {
+                    Files.writeString(configFile.toPath(), "\n# default: false\nuseRedUsernames=false", StandardOpenOption.APPEND);
+                    useRedUsernames = "false";
                 }
 
                 return true;
@@ -143,6 +149,8 @@ public class Config {
                 + "\n# default: false"
                 + "\n# only try this if ur having issues with typing"
                 + "\ninputFieldOverflowFix=false"
+                + "\n# default: false"
+                + "\nuseRedUsernames=false"
                 + "\n"
                 + "\n"
                 + "\n"

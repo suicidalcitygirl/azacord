@@ -40,7 +40,8 @@ public class Display {
         } else {
             if (Config.getUseColors())
                 screenBuffer.add(
-                    " " + ConsoleColors.Blue() + sender + ConsoleColors.Reset() + "  " + message
+                    " " + (Config.getUseRedUsernames() ? ConsoleColors.Red() : ConsoleColors.Blue())
+                    + sender + ConsoleColors.Reset() + "  " + message
                 );
             else
                 screenBuffer.add("[" + sender + "]: " + message);
