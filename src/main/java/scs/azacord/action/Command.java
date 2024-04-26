@@ -50,6 +50,8 @@ public class Command {
 
             case "/notifications": case "/n": showNotifications(); break;
 
+            case "/togglemessageaction": case "/togglema": toggleMessageAction(); break;
+
             default: Display.append(ConsoleColors.Red() + "Unknown Command!" + ConsoleColors.Reset()); break;
         }
     }
@@ -328,6 +330,18 @@ public class Command {
         Display.append("Sounds: " +
             (
                 Audio.disabled()
+                ? ConsoleColors.Red() + "disabled" + ConsoleColors.Reset()
+                : ConsoleColors.Green() + "enabled" + ConsoleColors.Reset()
+            )
+        );
+    }
+
+    private static void toggleMessageAction () {
+
+        Action.toggleMessageAction();
+        Display.append("MessageAction: " +
+            (
+                Action.getMessageActionDisabled()
                 ? ConsoleColors.Red() + "disabled" + ConsoleColors.Reset()
                 : ConsoleColors.Green() + "enabled" + ConsoleColors.Reset()
             )

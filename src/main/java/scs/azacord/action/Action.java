@@ -25,7 +25,13 @@ public class Action {
         System.exit(0);
     }
 
+    private static boolean disableMessageAction = false;
+    public static void toggleMessageAction () { disableMessageAction = !disableMessageAction; }
+    public static boolean getMessageActionDisabled () { return disableMessageAction; }
+
     public static void performOnMessageAction (String author, String message) {
+
+        if (disableMessageAction) return;
 
         String reggex = Config.getOnLocalChannelRecvCommand();
         if (reggex.equals("") || reggex.equals("NULL")) return;
